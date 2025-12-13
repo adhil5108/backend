@@ -31,4 +31,8 @@ public class FoodPost {
     @ManyToOne
     @JoinColumn(name = "donor_id")
     private Users donor;
+
+    @ManyToOne
+    @JoinColumn(name = "claimed_by_ngo")
+    private Users claimedBy;
 }
