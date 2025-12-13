@@ -23,7 +23,7 @@ public class FoodPost {
     private String pickupTime;
     private String location;
 
-//    private String imageUrl;
+  private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private FoodStatus status;

@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,13 +22,17 @@ public class DonorController {
 
     private final DonorService donorService;
 
-    @PostMapping("/food")
-    public FoodPost createFood(@Valid @RequestBody FoodPostRequest request, HttpServletRequest http) {
+    @PostMapping(value = "/food", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public FoodPost createFood(
+            @Valid @ModelAttribute FoodPostRequest request,
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            HttpServletRequest http
+    ) throws Exception {
 
         Users donor = (Users) http.getAttribute("user");
-
-        return donorService.createFood(request, donor);
+        return donorService.createFood(request, donor, image);
     }
+
 
     @GetMapping("/my-foods")
     public List<FoodPost> getMyFoods(HttpServletRequest http) {
