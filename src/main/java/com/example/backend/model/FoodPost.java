@@ -41,5 +41,4 @@ public class FoodPost {
 
     private String locationurl;
 
-
 }

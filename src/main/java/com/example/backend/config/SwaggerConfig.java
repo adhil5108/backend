@@ -21,7 +21,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Food Donation Platform API")
-                        .description("API documentation for the Donation system (Donor, NGO, Driver, Admin)")
+                        .description("API documentation for the Donation system (Donor, NGO, Driver)")
                         .version("1.0.0"));
     }
 }

@@ -21,7 +21,6 @@ public class Jwtservice {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-
     public String generatetoken(Users users){
         return Jwts.builder().setSubject(users.getEmail())
                 .claim("role",users.getRole().name())

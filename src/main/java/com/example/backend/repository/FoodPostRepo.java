@@ -12,9 +12,7 @@ public interface FoodPostRepo extends JpaRepository<FoodPost,Long> {
     List<FoodPost> findByDonor(Users donor);
     List<FoodPost> findByStatus(FoodStatus status);
     List<FoodPost> findByAssignedDriver(Users driver);
-
     Optional<FoodPost> findFirstByAssignedDriver(Users driver);
-
     Optional<FoodPost> findFirstByAssignedDriverAndStatus(Users driver, FoodStatus status);
     List<FoodPost> findByStatusNot(FoodStatus status);
     List<FoodPost> findByAssignedDriverAndStatusNot(Users driver, FoodStatus status);

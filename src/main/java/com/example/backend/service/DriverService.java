@@ -6,7 +6,9 @@ import com.example.backend.model.Role;
 import com.example.backend.model.Users;
 import com.example.backend.repository.FoodPostRepo;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,17 +28,17 @@ public class DriverService {
         );
     }
 
-    public FoodPost updateLocation(Users driver, String livelocation) throws Exception {
+    public FoodPost updateLocation(Users driver, String livelocation) {
         FoodPost post = foodPostRepo.findFirstByAssignedDriver(driver)
-                .orElseThrow(() -> new Exception("No assigned delivery"));
+                .orElseThrow(() -> new RuntimeException("No assigned delivery"));
 
         post.setLocationurl(livelocation);
         return foodPostRepo.save(post);
     }
 
-    public FoodPost updateChecklist(Users driver) throws Exception {
+    public FoodPost updateChecklist(Users driver)  {
         FoodPost post = foodPostRepo.findFirstByAssignedDriver(driver)
-                .orElseThrow(() -> new Exception("No assigned delivery"));
+                .orElseThrow(() -> new RuntimeException("No assigned delivery"));
 
         if (post.getStatus() == FoodStatus.DRIVER_ASSIGNED) {
             post.setStatus(FoodStatus.PICKED_UP);
@@ -56,5 +58,10 @@ public class DriverService {
         for (Users admin : admins) {
             notificationService.send(admin.getId(), message);
         }
+    }
+    public Users getDriver() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        return userDetails.getUser();
     }
 }

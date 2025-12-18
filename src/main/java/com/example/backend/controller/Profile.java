@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.model.Users;
 import com.example.backend.security.CustomUserDetails;
 import com.example.backend.service.Jwtservice;
+import com.example.backend.service.ProfileService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
 public class Profile {
-    private final Jwtservice jwtservice;
+    private final ProfileService profileService;
 
     @GetMapping()
     public Users get() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-        return userDetails.getUser();
+        return profileService.getCurrentUser();
     }
 }

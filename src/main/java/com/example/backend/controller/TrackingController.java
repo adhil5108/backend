@@ -1,8 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.TrackingResponse;
-import com.example.backend.model.FoodPost;
-import com.example.backend.repository.FoodPostRepo;
+import com.example.backend.service.TrackingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,18 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TrackingController {
 
-    private final FoodPostRepo foodPostRepo;
+    private final TrackingService trackingService;
 
     @GetMapping("/{foodId}")
     public TrackingResponse getLocation(@PathVariable Long foodId) {
-
-        FoodPost post = foodPostRepo.findById(foodId)
-                .orElseThrow(() -> new RuntimeException("Food not found"));
-
-        return new TrackingResponse(
-                post.getLocationurl(),
-                post.getStatus().name()
-        );
+        return trackingService.getTrackingInfo(foodId);
     }
-
 }

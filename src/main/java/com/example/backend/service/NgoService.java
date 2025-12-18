@@ -20,13 +20,13 @@ public class NgoService {
         return foodPostRepo.findByStatus(FoodStatus.PENDING);
     }
 
-    public FoodPost claimFood(Long id, Users ngo) throws Exception {
+    public FoodPost claimFood(Long id, Users ngo)  {
         FoodPost post = foodPostRepo.findById(id)
-                .orElseThrow(() -> new Exception("Food post not found"));
+                .orElseThrow(() -> new RuntimeException("Food post not found"));
 
 
         if (post.getStatus() != FoodStatus.PENDING) {
-            throw new Exception("Food already claimed");
+            throw new RuntimeException("Food already claimed");
         }
 
         post.setStatus(FoodStatus.CLAIMED);

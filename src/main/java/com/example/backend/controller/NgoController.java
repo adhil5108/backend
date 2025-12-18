@@ -26,7 +26,7 @@ public class NgoController {
     }
 
     @PatchMapping("/claim/{id}")
-    public FoodPost claimFood(@PathVariable Long id, HttpServletRequest http) throws Exception {
+    public FoodPost claimFood(@PathVariable Long id, HttpServletRequest http)  {
 
         var auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();

@@ -23,21 +23,20 @@ public class AdminService {
         return foodPostRepo.findByStatusNot(FoodStatus.DELIVERED);
     }
 
-
     public List<Users> getAllDrivers() {
         return userRepo.findByRole(Role.valueOf("DRIVER"));
     }
 
-    public FoodPost assignDriver(Long postId, Long driverId) throws Exception {
+    public FoodPost assignDriver(Long postId, Long driverId)  {
 
         FoodPost post = foodPostRepo.findById(postId)
-                .orElseThrow(() -> new Exception("Food post not found"));
+                .orElseThrow(() -> new RuntimeException("Food post not found"));
 
         Users driver = userRepo.findById(driverId)
-                .orElseThrow(() -> new Exception("Driver not found"));
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
 
         if (!driver.getRole().name().equals("DRIVER")) {
-            throw new Exception("Selected user is not a driver");
+            throw new RuntimeException("Selected user is not a driver");
         }
 
         post.setAssignedDriver(driver);

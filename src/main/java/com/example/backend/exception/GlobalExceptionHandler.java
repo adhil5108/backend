@@ -14,8 +14,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // dto
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -27,7 +25,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    // runtime errors
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntime(RuntimeException ex) {
         return ResponseEntity
@@ -35,7 +32,6 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", ex.getMessage()));
     }
 
-    //  JWT errors
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<?> handleJwt(JwtException ex) {
         return ResponseEntity
@@ -43,7 +39,6 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", "Invalid or expired token"));
     }
 
-    //   unexpected errors
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneral(Exception ex) {
         return ResponseEntity

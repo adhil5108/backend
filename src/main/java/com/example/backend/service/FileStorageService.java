@@ -27,8 +27,8 @@ public class FileStorageService {
             throw new IOException("Only image files are allowed");
         }
 
-        // Limit check (optional: you already set spring.servlet.multipart.*)
-        long maxBytes = 5 * 1024 * 1024; // 5MB
+        // Limit check
+        long maxBytes = 5 * 1024 * 1024;
         if (file.getSize() > maxBytes) throw new IOException("File too large");
 
 

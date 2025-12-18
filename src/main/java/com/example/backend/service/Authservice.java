@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class Authservice {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final Jwtservice jwtservice;
@@ -48,7 +49,6 @@ public class Authservice {
             throw new RuntimeException("Invalid password");
         }
         String token = jwtservice.generatetoken(user);
-
 
         return Authresponse.builder()
                 .token(token)

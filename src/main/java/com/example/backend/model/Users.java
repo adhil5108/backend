@@ -19,8 +19,10 @@ public class Users {
     private Long id;
     private String username;
     private String email;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 }

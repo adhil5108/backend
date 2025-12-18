@@ -21,58 +21,16 @@ public class Authcontroller {
 
     private final Authservice authService;
 
-    @Operation(
-            summary = "Register a new user",
-            description = "Creates a new user account and returns a JWT token.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Signup successful",
-                            content = @Content(schema = @Schema(implementation = Authresponse.class))
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "User already exists / invalid input"
-                    )
-            }
-    )
+    @Operation(summary = "Register a new user")
     @PostMapping("/signup")
-    public Authresponse signup(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "User signup details",
-                    required = true,
-                    content = @Content(schema = @Schema(implementation = Signuprequest.class))
-            )
-           @Valid @RequestBody Signuprequest request
-    ) {
+    public Authresponse signup(@Valid @RequestBody Signuprequest request) {
         return authService.signup(request);
     }
 
 
-    @Operation(
-            summary = "Login user",
-            description = "Authenticates a user and returns a JWT token.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Login successful",
-                            content = @Content(schema = @Schema(implementation = Authresponse.class))
-                    ),
-                    @ApiResponse(
-                            responseCode = "401",
-                            description = "Invalid email or password"
-                    )
-            }
-    )
+    @Operation(summary = "Login user")
     @PostMapping("/login")
-    public Authresponse login(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "User login credentials",
-                    required = true,
-                    content = @Content(schema = @Schema(implementation = Loginrequest.class))
-            )
-           @Valid @RequestBody Loginrequest request
-    ) {
+    public Authresponse login(@Valid @RequestBody Loginrequest request){
         return authService.login(request);
     }
 }
